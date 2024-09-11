@@ -1,10 +1,22 @@
+import Headings from "./Headings";
+import Paragraphs from "./Paragraphs";
+import Lists from "./Lists";
+import Tables from "./Tables";
+import Images from "./Images";
+import Forms from "./Forms";
+import Anchors from "./Anchors";
+
 export default function Lab1() {
-    return(
-        <div>
-            <h2>Lab 1</h2>
-            <h3>Exercise 1.1</h3>
-            <h3>Exercise 1.2</h3>
-            <h3>Exercise 1.3</h3>
-        </div>
-    )
+  return (
+    <div>
+      <h2>Lab 1</h2>
+      <Headings />
+      <Paragraphs />
+      <Lists />
+      <Tables />
+      <Images />
+      <Forms />
+      <Anchors />
+    </div>
+  );
 }
