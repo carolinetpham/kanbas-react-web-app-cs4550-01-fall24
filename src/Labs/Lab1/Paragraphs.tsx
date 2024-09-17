@@ -1,6 +1,6 @@
 export default function Paragraphs() {
   return (
-    <div>
+    <div id="wd-lab1">
       <div id="wd-p-tag">
         <h4>Paragraph Tag</h4>
         <p id="wd-p-1">
