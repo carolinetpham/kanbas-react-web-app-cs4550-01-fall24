@@ -1,6 +1,6 @@
 export default function Headings() {
   return (
-    <div>
+    <div id="wd-lab1">
       <h3>HTML Examples</h3>
       <div id="wd-h-tag">
         <h4>Heading Tags</h4>
