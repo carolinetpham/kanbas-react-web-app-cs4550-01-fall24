@@ -1,6 +1,6 @@
 export default function Forms() {
   return (
-    <div>
+    <div id="wd-lab1">
       <h3>Forms</h3>
       <div id="wd-forms">
         <h4>Form Elements</h4>
