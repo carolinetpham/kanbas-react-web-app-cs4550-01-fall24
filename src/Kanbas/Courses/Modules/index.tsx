@@ -1,6 +1,6 @@
 export default function Modules() {
   return (
-    <div>
+    <div id="wd-modules">
       <button>Collapse All</button>
       <button>View Progress</button>
       <select id="publish-all">
