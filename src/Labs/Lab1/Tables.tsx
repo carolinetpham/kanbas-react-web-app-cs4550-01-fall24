@@ -1,6 +1,6 @@
 export default function Tables() {
   return (
-    <div>
+    <div id="wd-lab1">
       <h3>Tables</h3>
       <div id="wd-tables">
         <h4>Table Tag</h4>
