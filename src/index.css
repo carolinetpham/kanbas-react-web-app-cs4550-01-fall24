@@ -1,30 +1,15 @@
-/*p {
-  background-color: blue;
-  color: white;
-}
-*/
-
-p#wd-id-selector-1 {
-  background-color: red;
-  color: white;
- }
-
- p#wd-id-selector-2 {
-  background-color: yellow;
-  color: black;
- }
-
- .wd-class-selector {
-  background-color: yellow;
-  color: blue;
- }
-  
- .wd-selector-1 .wd-selector-3 {
-  background-color: red;
-  color: white;
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-.wd-selector-2 > .wd-selector-3 > .wd-selector-4 {
-  background-color: yellow;
-  color: blue;
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
 }
+
+
