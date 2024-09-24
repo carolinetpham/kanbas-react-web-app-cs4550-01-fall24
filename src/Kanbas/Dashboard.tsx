@@ -30,7 +30,9 @@ export default function Dashboard() {
                 </Link>
               </div>
             </div>
+          </div>
 
+          <div className="wd-dashboard-course col" style={{ width: "300px" }}>
             <div className="card rounded-3 overflow-hidden">
               <div>
                 <Link
@@ -50,7 +52,9 @@ export default function Dashboard() {
                 </Link>
               </div>
             </div>
+          </div>
 
+          <div className="wd-dashboard-course col" style={{ width: "300px" }}>
             <div className="card rounded-3 overflow-hidden">
               <div>
                 <Link
@@ -74,7 +78,9 @@ export default function Dashboard() {
                 </Link>
               </div>
             </div>
+          </div>
 
+          <div className="wd-dashboard-course col" style={{ width: "300px" }}>
             <div className="card rounded-3 overflow-hidden">
               <div>
                 <Link
@@ -84,7 +90,7 @@ export default function Dashboard() {
                   <img src="/images/hci.jpg" width="100%" height={160} />
                   <div className="card-body">
                     <h5 className="wd-dashboard-course-title card-title">
-                      IS4300 Human Computer Interaction
+                      IS4300 HCI
                     </h5>
                     <p className="wd-dashboard-course-title card-text">
                       Human Computer Interaction
@@ -94,7 +100,9 @@ export default function Dashboard() {
                 </Link>
               </div>
             </div>
+          </div>
 
+          <div className="wd-dashboard-course col" style={{ width: "300px" }}>
             <div className="card rounded-3 overflow-hidden">
               <div>
                 <Link
@@ -114,7 +122,9 @@ export default function Dashboard() {
                 </Link>
               </div>
             </div>
+          </div>
 
+          <div className="wd-dashboard-course col" style={{ width: "300px" }}>
             <div className="card rounded-3 overflow-hidden">
               <div>
                 <Link
@@ -134,7 +144,9 @@ export default function Dashboard() {
                 </Link>
               </div>
             </div>
+          </div>
 
+          <div className="wd-dashboard-course col" style={{ width: "300px" }}>
             <div className="card rounded-3 overflow-hidden">
               <div>
                 <Link
@@ -144,7 +156,7 @@ export default function Dashboard() {
                   <img src="/images/fundies.jpg" width="100%" height={160} />
                   <div className="card-body">
                     <h5 className="wd-dashboard-course-title card-title">
-                      CS2500 Fundamentals of Computer Science
+                      CS2500 Fundies 1
                     </h5>
                     <p className="wd-dashboard-course-title card-text">
                       Fundamentals of Computer Science
@@ -155,15 +167,6 @@ export default function Dashboard() {
               </div>
             </div>
           </div>
-        </div>
-        <div className="wd-dashboard-course col" style={{ width: "300px" }}>
-          ...
-        </div>
-        <div className="wd-dashboard-course col" style={{ width: "300px" }}>
-          ...
-        </div>
-        <div className="wd-dashboard-course col" style={{ width: "300px" }}>
-          ...
         </div>
       </div>
     </div>
