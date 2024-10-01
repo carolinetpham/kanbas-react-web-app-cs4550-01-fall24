@@ -80,6 +80,7 @@ export default function AssignmentEditor() {
                   type="checkbox"
                   name="check-subtype"
                   id="wd-text-entry"
+                  style={{ marginRight: "10px" }}
                 />
                 <label htmlFor="wd-text-entry">Text Entry</label>
               </div>
@@ -88,6 +89,7 @@ export default function AssignmentEditor() {
                   type="checkbox"
                   name="check-subtype"
                   id="wd-website-url"
+                  style={{ marginRight: "10px" }}
                 />
                 <label htmlFor="wd-website-url">Website URL</label>
               </div>
@@ -96,6 +98,7 @@ export default function AssignmentEditor() {
                   type="checkbox"
                   name="check-subtype"
                   id="wd-media-recordings"
+                  style={{ marginRight: "10px" }}
                 />
                 <label htmlFor="wd-media-recordings">Media Recordings</label>
               </div>
@@ -104,6 +107,7 @@ export default function AssignmentEditor() {
                   type="checkbox"
                   name="check-subtype"
                   id="wd-student-annotation"
+                  style={{ marginRight: "10px" }}
                 />
                 <label htmlFor="wd-student-annotation">
                   Student Annotation
@@ -114,6 +118,7 @@ export default function AssignmentEditor() {
                   type="checkbox"
                   name="check-subtype"
                   id="wd-file-upload"
+                  style={{ marginRight: "10px" }}
                 />
                 <label htmlFor="wd-file-upload">File Uploads</label>
               </div>
