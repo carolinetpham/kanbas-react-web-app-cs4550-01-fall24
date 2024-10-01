@@ -27,18 +27,18 @@ export default function Assignments() {
               <IoMdArrowDropdown />
               <b>ASSIGNMENTS</b>
             </div>
-
-            <span
+            <div
               style={{
-                border: "1px solid #000",
-                borderRadius: "50px",
-                padding: "10px",
-                marginLeft: "60%",
+                display: "flex",
+                justifyContent: "space-between",
+                width: "auto",
               }}
             >
-              40% of Total
-            </span>
-            <AssignmentControlButtons />
+              <span className="border border-dark rounded p-1">
+                40% of Total
+              </span>
+              <AssignmentControlButtons />
+            </div>
           </div>
 
           <li className="wd-assignment-list-item list-group-item p-3 ps-1">
