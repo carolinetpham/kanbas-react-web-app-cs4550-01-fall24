@@ -23,7 +23,7 @@ export default function AssignmentEditor() {
           to navigate back to the landing page.
         </textarea>
       </div>
-      <div className="row mb-3">
+      <div className="row mb-3" style={{ marginTop: "20px" }}>
         <div className="col-sm-2 text-end align-middle">
           <label htmlFor="wd-points" className="form-label">
             Points
@@ -121,8 +121,7 @@ export default function AssignmentEditor() {
           </div>
         </div>
       </div>
-      <br />
-      <div className="row">
+      <div className="row" style={{ marginTop: "20px" }}>
         <div className="col-sm-2 text-end align-middle">
           <label htmlFor="wd-assign-to" className="form-label">
             Assign
@@ -131,7 +130,6 @@ export default function AssignmentEditor() {
         <div className="col-sm-10 d-flex">
           <div className="form-control d-flex flex-column p-3">
             <b>Assign to</b>
-            <br />
             <input
               id="wd-assign-to"
               value={"Everyone"}
@@ -141,23 +139,34 @@ export default function AssignmentEditor() {
               <label htmlFor="wd-due-date" className="form-label">
                 <b>Due</b>
               </label>{" "}
-              <br />
-              <input type="date" id="wd-due-date" value="2024-05-13" />
+              <div>
+                <input type="date" id="wd-due-date" value="2024-05-13" />
+              </div>
             </div>
             <div className="row">
               <div className="col-sm-6">
                 <label htmlFor="wd-available-from" className="form-label">
                   <b>Available from</b>
                 </label>{" "}
-                <br />
-                <input type="date" id="wd-available-from" value="2024-05-06" />
+                <div>
+                  <input
+                    type="date"
+                    id="wd-available-from"
+                    value="2024-05-06"
+                  />
+                </div>
               </div>
               <div className="col-sm-6">
                 <label htmlFor="wd-available-until" className="form-label">
                   <b>Until</b>
                 </label>{" "}
-                <br />
-                <input type="date" id="wd-available-until" value="2024-05-20" />
+                <div>
+                  <input
+                    type="date"
+                    id="wd-available-until"
+                    value="2024-05-20"
+                  />
+                </div>
               </div>
             </div>
           </div>
