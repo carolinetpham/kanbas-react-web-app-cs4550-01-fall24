@@ -10,7 +10,7 @@ export default function KanbasNavigation() {
     { label: "Courses", path: "/Kanbas/Dashboard", icon: LiaBookSolid },
     { label: "Calendar", path: "/Kanbas/Calendar", icon: IoCalendarOutline },
     { label: "Inbox", path: "/Kanbas/Inbox", icon: FaInbox },
-    { label: "Labs", path: "./Labs", icon: LiaCogSolid },
+    { label: "Labs", path: "/Labs", icon: LiaCogSolid },
   ];
 
   return (
