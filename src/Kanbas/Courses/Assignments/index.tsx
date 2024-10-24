@@ -7,6 +7,7 @@ import AssignmentControls from "./AssignmentControls";
 import { useParams } from "react-router";
 import * as db from "../../Database";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export default function Assignments() {
   const { cid } = useParams();
@@ -15,9 +16,11 @@ export default function Assignments() {
     (assignment) => assignment.course === cid
   );
 
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
+
   return (
     <div id="wd-assignments" style={{ padding: "20px" }}>
-      <AssignmentControls />
+      {currentUser.role === "FACULTY" && <AssignmentControls />}
       <br />
       <br />
 
@@ -42,7 +45,7 @@ export default function Assignments() {
           }}
         >
           <span className="border border-dark rounded p-1">40% of Total</span>
-          <AssignmentControlButtons />
+          {currentUser.role === "FACULTY" && <AssignmentControlButtons />}
         </div>
       </div>
       <ul id="wd-assignments-list" className="list-group rounded-0">
@@ -57,7 +60,7 @@ export default function Assignments() {
               flexWrap: "wrap",
             }}
           >
-            <AssignmentListControls />
+            {currentUser.role === "FACULTY" && <AssignmentListControls />}
             <div
               style={{
                 flexGrow: 1,
@@ -66,19 +69,24 @@ export default function Assignments() {
                 textAlign: "left",
               }}
             >
-              <Link
-                className="wd-assignment-link"
-                to={`/Kanbas/Courses/${cid}/Assignments/${assignment._id}`}
-              >
-                {assignment.title}
-              </Link>
-              <br />
+              {currentUser.role === "FACULTY" ? (
+                <Link
+                  className="wd-assignment-link"
+                  to={`/Kanbas/Courses/${cid}/Assignments/${assignment._id}`}
+                >
+                  {assignment.title} <br />
+                </Link>
+              ) : (
+                <span className="wd-assignment-title">
+                  {assignment.title} <br />
+                </span>
+              )}
               <span className="text-danger">Multiple Modules</span> |{" "}
               <b> Not Available until </b> May 6 at 12:00am |
               <br />
               <b>Due</b> May 13 at 11:59pm | 100 pts
             </div>
-            <LessonControlButtons />
+            {currentUser.role === "FACULTY" && <LessonControlButtons />}
           </li>
         ))}
       </ul>
