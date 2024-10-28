@@ -11,9 +11,11 @@ import { useSelector } from "react-redux";
 
 export default function Assignments() {
   const { cid } = useParams();
-  const assignments = db.assignments;
+  const assignments = useSelector(
+    (state: any) => state.assignmentReducer.assignments
+  );
   const courseAssignments = assignments.filter(
-    (assignment) => assignment.course === cid
+    (assignment: any) => assignment.course === cid
   );
 
   const { currentUser } = useSelector((state: any) => state.accountReducer);
@@ -49,7 +51,7 @@ export default function Assignments() {
         </div>
       </div>
       <ul id="wd-assignments-list" className="list-group rounded-0">
-        {courseAssignments.map((assignment, index) => (
+        {courseAssignments.map((assignment: any, index: any) => (
           <li
             key={index}
             className="wd-assignment-list-item list-group-item p-3 ps-1 border-bottom"
