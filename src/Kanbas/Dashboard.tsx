@@ -100,8 +100,8 @@ export default function Dashboard({
                 to={
                   currentUser.role === "STUDENT" &&
                   enrollments.includes(course._id)
-                    ? `/Kanbas/Courses/${course._id}/Home`
-                    : "/Dashboard"
+                    ? "/Dashboard"
+                    : `/Kanbas/Courses/${course._id}/Home`
                 }
                 className="text-decoration-none text-dark"
               >
