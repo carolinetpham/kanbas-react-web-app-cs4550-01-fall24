@@ -2,12 +2,13 @@ import { BsGripVertical } from "react-icons/bs";
 import { IoMdArrowDropdown } from "react-icons/io";
 import AssignmentControlButtons from "./AssignmentControlButtons";
 import AssignmentListControls from "./AssignmentListControls";
-import LessonControlButtons from "../Modules/LessonControlButtons";
 import AssignmentControls from "./AssignmentControls";
 import { useParams } from "react-router";
 import * as db from "../../Database";
 import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import AssignmentLessonControlButtons from "./AssignmentLessonControlButtons";
+import { deleteAssignment } from "./reducer";
 
 export default function Assignments() {
   const { cid } = useParams();
@@ -17,8 +18,19 @@ export default function Assignments() {
   const courseAssignments = assignments.filter(
     (assignment: any) => assignment.course === cid
   );
+  const dispatch = useDispatch();
 
   const { currentUser } = useSelector((state: any) => state.accountReducer);
+
+  const formatDate = (dateString: string | undefined) => {
+    if (!dateString) return "N/A";
+    const options: Intl.DateTimeFormatOptions = {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    };
+    return new Date(dateString).toLocaleDateString(undefined, options);
+  };
 
   return (
     <div id="wd-assignments" style={{ padding: "20px" }}>
@@ -84,11 +96,20 @@ export default function Assignments() {
                 </span>
               )}
               <span className="text-danger">Multiple Modules</span> |{" "}
-              <b> Not Available until </b> May 6 at 12:00am |
-              <br />
-              <b>Due</b> May 13 at 11:59pm | 100 pts
+              <b>Available from</b>{" "}
+              {formatDate(assignment.availableFromDate) || "N/A"} | <b>Until</b>{" "}
+              {formatDate(assignment.availableUntilDate) || "N/A"} | <br />
+              <b>Due</b> {formatDate(assignment.dueDate) || "N/A"} |{" "}
+              {assignment.points || 0} pts
             </div>
-            {currentUser.role === "FACULTY" && <LessonControlButtons />}
+            {currentUser.role === "FACULTY" && (
+              <AssignmentLessonControlButtons
+                assignmentId={assignment._id}
+                deleteAssignment={(assignmentId) => {
+                  dispatch(deleteAssignment(assignmentId));
+                }}
+              />
+            )}
           </li>
         ))}
       </ul>

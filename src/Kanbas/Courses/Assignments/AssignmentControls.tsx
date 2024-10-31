@@ -1,7 +1,10 @@
 import { FaPlus } from "react-icons/fa6";
 import { CiSearch } from "react-icons/ci";
 import { useNavigate, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 export default function AssignmentControls() {
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
   const navigate = useNavigate();
   const { cid } = useParams();
 
