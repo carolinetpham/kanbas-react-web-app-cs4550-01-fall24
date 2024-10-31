@@ -2,22 +2,54 @@ import { BsGripVertical } from "react-icons/bs";
 import { IoMdArrowDropdown } from "react-icons/io";
 import AssignmentControlButtons from "./AssignmentControlButtons";
 import AssignmentListControls from "./AssignmentListControls";
-import LessonControlButtons from "../Modules/LessonControlButtons";
 import AssignmentControls from "./AssignmentControls";
 import { useParams } from "react-router";
 import * as db from "../../Database";
 import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import AssignmentLessonControlButtons from "./AssignmentLessonControlButtons";
+import { deleteAssignment } from "./reducer";
 
 export default function Assignments() {
   const { cid } = useParams();
-  const assignments = db.assignments;
-  const courseAssignments = assignments.filter(
-    (assignment) => assignment.course === cid
+  const assignments = useSelector(
+    (state: any) => state.assignmentReducer.assignments
   );
+  const courseAssignments = assignments.filter(
+    (assignment: any) => assignment.course === cid
+  );
+  const dispatch = useDispatch();
+
+  const { currentUser } = useSelector((state: any) => state.accountReducer);
+
+  const formatDate = (date: Date | string | undefined) => {
+    if (!date) return "N/A";
+    const dateObj = typeof date === "string" ? new Date(date) : date;
+
+    const monthNames = [
+      "Jan",
+      "Feb",
+      "Mar",
+      "Apr",
+      "May",
+      "Jun",
+      "Jul",
+      "Aug",
+      "Sep",
+      "Oct",
+      "Nov",
+      "Dec",
+    ];
+    const month = monthNames[dateObj.getMonth()];
+    const day =
+      dateObj.getDate() < 10 ? `0${dateObj.getDate()}` : dateObj.getDate();
+    const year = dateObj.getFullYear();
+    return `${month} ${day}, ${year}`;
+  };
 
   return (
     <div id="wd-assignments" style={{ padding: "20px" }}>
-      <AssignmentControls />
+      {currentUser.role === "FACULTY" && <AssignmentControls />}
       <br />
       <br />
 
@@ -42,11 +74,11 @@ export default function Assignments() {
           }}
         >
           <span className="border border-dark rounded p-1">40% of Total</span>
-          <AssignmentControlButtons />
+          {currentUser.role === "FACULTY" && <AssignmentControlButtons />}
         </div>
       </div>
       <ul id="wd-assignments-list" className="list-group rounded-0">
-        {courseAssignments.map((assignment, index) => (
+        {courseAssignments.map((assignment: any, index: any) => (
           <li
             key={index}
             className="wd-assignment-list-item list-group-item p-3 ps-1 border-bottom"
@@ -57,7 +89,7 @@ export default function Assignments() {
               flexWrap: "wrap",
             }}
           >
-            <AssignmentListControls />
+            {currentUser.role === "FACULTY" && <AssignmentListControls />}
             <div
               style={{
                 flexGrow: 1,
@@ -66,19 +98,33 @@ export default function Assignments() {
                 textAlign: "left",
               }}
             >
-              <Link
-                className="wd-assignment-link"
-                to={`/Kanbas/Courses/${cid}/Assignments/${assignment._id}`}
-              >
-                {assignment.title}
-              </Link>
-              <br />
+              {currentUser.role === "FACULTY" ? (
+                <Link
+                  className="wd-assignment-link"
+                  to={`/Kanbas/Courses/${cid}/Assignments/${assignment._id}`}
+                >
+                  {assignment.title} <br />
+                </Link>
+              ) : (
+                <span className="wd-assignment-title">
+                  {assignment.title} <br />
+                </span>
+              )}
               <span className="text-danger">Multiple Modules</span> |{" "}
-              <b> Not Available until </b> May 6 at 12:00am |
-              <br />
-              <b>Due</b> May 13 at 11:59pm | 100 pts
+              <b>Available from</b>{" "}
+              {formatDate(assignment.availableFromDate) || "N/A"} | <b>Until</b>{" "}
+              {formatDate(assignment.availableUntilDate) || "N/A"} | <br />
+              <b>Due</b> {formatDate(assignment.dueDate) || "N/A"} |{" "}
+              {assignment.points || 0} pts
             </div>
-            <LessonControlButtons />
+            {currentUser.role === "FACULTY" && (
+              <AssignmentLessonControlButtons
+                assignmentId={assignment._id}
+                deleteAssignment={(assignmentId) => {
+                  dispatch(deleteAssignment(assignmentId));
+                }}
+              />
+            )}
           </li>
         ))}
       </ul>
