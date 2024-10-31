@@ -36,9 +36,12 @@ export default function Dashboard({
     dispatch(unenrollCourse(courseId));
   };
 
-  const displayedCourses = showAllCourses
-    ? courses
-    : courses.filter((course) => enrollments.includes(course._id));
+  const displayedCourses =
+    currentUser.role === "FACULTY"
+      ? courses
+      : showAllCourses
+      ? courses
+      : courses.filter((course) => enrollments.includes(course._id));
 
   return (
     <div id="wd-dashboard">
@@ -77,7 +80,6 @@ export default function Dashboard({
           <hr />
         </>
       )}
-
       {currentUser.role === "STUDENT" && (
         <button
           className="btn btn-primary float-end"
@@ -96,6 +98,7 @@ export default function Dashboard({
             <div className="card rounded-3 overflow-hidden">
               <Link
                 to={
+                  currentUser.role === "STUDENT" &&
                   enrollments.includes(course._id)
                     ? `/Kanbas/Courses/${course._id}/Home`
                     : "/Dashboard"
