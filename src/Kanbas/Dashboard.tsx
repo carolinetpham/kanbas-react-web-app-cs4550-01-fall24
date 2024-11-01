@@ -98,9 +98,10 @@ export default function Dashboard({
             <div className="card rounded-3 overflow-hidden">
               <Link
                 to={
+                  currentUser.role === "FACULTY" ||
                   enrollments.includes(course._id)
-                    ? "/Dashboard"
-                    : `/Kanbas/Courses/${course._id}/Home`
+                    ? `/Kanbas/Courses/${course._id}/Home`
+                    : "/Dashboard"
                 }
                 className="text-decoration-none text-dark"
               >
