@@ -7,8 +7,9 @@ import {
   deleteAssignment,
 } from "./reducer";
 import { useParams, useNavigate } from "react-router-dom";
-import { assignments } from "../../Database";
 import { useSelector } from "react-redux";
+import * as assignmentsClient from "./client";
+import * as coursesClient from "../client";
 
 export default function AssignmentEditor({
   dialogTitle,
@@ -64,6 +65,29 @@ export default function AssignmentEditor({
 
   const generateUniqueId = () => Date.now().toString();
 
+  const createAssignmentForCourse = async () => {
+    if (!cid) return;
+    const newAssignment = {
+      _id: Date.now().toString(),
+      title,
+      description,
+      points,
+      dueDate,
+      availableFromDate: availableFrom,
+      availableUntilDate: availableUntil,
+      course: cid,
+    };
+    const assignment = await coursesClient.createAssignmentForCourse(
+      cid,
+      newAssignment
+    );
+    dispatch(addAssignment(assignment));
+  };
+  const saveAssignment = async (assignment: any) => {
+    await assignmentsClient.updateAssignment(assignment);
+    dispatch(updateAssignment(assignment));
+  };
+
   const handleSave = () => {
     const assignmentData = {
       _id: aid || generateUniqueId(),
@@ -76,9 +100,9 @@ export default function AssignmentEditor({
       course: cid,
     };
     if (isEdit) {
-      dispatch(updateAssignment(assignmentData));
+      saveAssignment(assignmentData);
     } else {
-      dispatch(addAssignment(assignmentData));
+      createAssignmentForCourse();
     }
     navigate(`/Kanbas/Courses/${cid}/Assignments`);
   };

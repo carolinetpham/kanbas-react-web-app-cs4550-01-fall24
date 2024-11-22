@@ -8,7 +8,10 @@ import * as db from "../../Database";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import AssignmentLessonControlButtons from "./AssignmentLessonControlButtons";
-import { deleteAssignment } from "./reducer";
+import { setAssignments, deleteAssignment, addAssignment } from "./reducer";
+import * as coursesClient from "../client";
+import * as assignmentsClient from "./client";
+import { useEffect } from "react";
 
 export default function Assignments() {
   const { cid } = useParams();
@@ -19,6 +22,19 @@ export default function Assignments() {
     (assignment: any) => assignment.course === cid
   );
   const dispatch = useDispatch();
+
+  const fetchAssignments = async () => {
+    const modules = await coursesClient.findAssignmentsForCourse(cid as string);
+    dispatch(setAssignments(modules));
+  };
+  useEffect(() => {
+    fetchAssignments();
+  }, []);
+
+  const removeAssignment = async (assignmentId: string) => {
+    await assignmentsClient.deleteAssignment(assignmentId);
+    dispatch(deleteAssignment(assignmentId));
+  };
 
   const { currentUser } = useSelector((state: any) => state.accountReducer);
 
@@ -120,9 +136,7 @@ export default function Assignments() {
             {currentUser.role === "FACULTY" && (
               <AssignmentLessonControlButtons
                 assignmentId={assignment._id}
-                deleteAssignment={(assignmentId) => {
-                  dispatch(deleteAssignment(assignmentId));
-                }}
+                deleteAssignment={removeAssignment}
               />
             )}
           </li>
