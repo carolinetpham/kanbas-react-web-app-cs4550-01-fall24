@@ -1,7 +1,11 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { enrollCourse, unenrollCourse } from "./reducer";
+import * as userClient from "./Account/client";
+import * as coursesClient from "./Courses/client";
+import * as enrollmentClient from "./client";
+import { addEnrollments, deleteEnrollments, setEnrollments } from "./reducer";
+
 export default function Dashboard({
   courses,
   course,
@@ -19,29 +23,72 @@ export default function Dashboard({
 }) {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const enrollments = useSelector(
-    (state: any) => state.enrollmentReducer.enrollments
+    (state: any) => state.enrollmentReducer.enrollments || []
   );
   const dispatch = useDispatch();
+  const cid = useParams();
+
   const [showAllCourses, setShowAllCourses] = useState(false);
 
   const toggleEnrollmentView = () => {
     setShowAllCourses(!showAllCourses);
   };
 
-  const handleEnroll = (courseId: any) => {
-    dispatch(enrollCourse(courseId));
+  useEffect(() => {
+    const fetchEnrollments = async () => {
+      try {
+        const userEnrollments = await userClient.getEnrollmentsForCurrentUser();
+        dispatch(setEnrollments(userEnrollments));
+      } catch (error) {
+        console.error("Error fetching enrollments:", error);
+      }
+    };
+
+    if (currentUser) {
+      fetchEnrollments();
+    }
+  }, [currentUser, dispatch]);
+
+  const addNewEnrollment = async (course: any) => {
+    const enrollment = {
+      _id: Date.now().toString(),
+      user: currentUser._id,
+      course: course._id,
+    };
+    try {
+      console.log("Creating enrollment:", enrollment);
+      const newEnrollment = await userClient.createEnrollment(enrollment);
+      console.log("New enrollment created:", newEnrollment);
+
+      dispatch(setEnrollments([...enrollments, newEnrollment]));
+    } catch (error) {
+      console.error("Error adding new enrollment:", error);
+    }
   };
 
-  const handleUnenroll = (courseId: any) => {
-    dispatch(unenrollCourse(courseId));
+  const removeEnrollment = async (courseId: string) => {
+    const enrollmentToRemove = enrollments.find(
+      (enrollment: any) => enrollment.course === courseId
+    );
+    if (enrollmentToRemove) {
+      await enrollmentClient.deleteEnrollment(enrollmentToRemove._id);
+      dispatch(deleteEnrollments(enrollmentToRemove._id));
+    }
   };
 
-  const displayedCourses =
-    currentUser.role === "FACULTY"
-      ? courses
-      : showAllCourses
-      ? courses
-      : courses.filter((course) => enrollments.includes(course._id));
+  const isEnrolled = (courseId: string) => {
+    return enrollments.some(
+      (enrollment: any) => enrollment.course === courseId
+    );
+  };
+
+  const filteredCourses = showAllCourses
+    ? courses
+    : courses.filter((course: any) => isEnrolled(course._id));
+
+  useEffect(() => {
+    console.log("Enrollments updated:", enrollments);
+  }, [enrollments]);
 
   return (
     <div id="wd-dashboard">
@@ -64,7 +111,6 @@ export default function Dashboard({
               Update
             </button>
           </h5>
-          <br />
           <input
             value={course.name}
             className="form-control mb-2"
@@ -89,17 +135,19 @@ export default function Dashboard({
         </button>
       )}
 
-      <h2>Published Courses ({displayedCourses.length})</h2>
+      <h2>
+        {showAllCourses ? "Published Courses" : "Published Courses"} (
+        {filteredCourses.length})
+      </h2>
       <hr />
 
       <div className="row row-cols-1 row-cols-md-5 g-4">
-        {displayedCourses.map((course) => (
+        {filteredCourses.map((course) => (
           <div key={course._id} className="col" style={{ width: "300px" }}>
             <div className="card rounded-3 overflow-hidden">
               <Link
                 to={
-                  currentUser.role === "FACULTY" ||
-                  enrollments.includes(course._id)
+                  currentUser.role === "FACULTY" || isEnrolled(course._id)
                     ? `/Kanbas/Courses/${course._id}/Home`
                     : "/Dashboard"
                 }
@@ -121,12 +169,12 @@ export default function Dashboard({
                   </p>
                   {currentUser.role === "STUDENT" && (
                     <div>
-                      {enrollments.includes(course._id) ? (
+                      {isEnrolled(course._id) ? (
                         <button
                           className="btn btn-danger"
                           onClick={(e) => {
                             e.preventDefault();
-                            handleUnenroll(course._id);
+                            removeEnrollment(course._id);
                           }}
                         >
                           Unenroll
@@ -136,7 +184,7 @@ export default function Dashboard({
                           className="btn btn-success"
                           onClick={(e) => {
                             e.preventDefault();
-                            handleEnroll(course._id);
+                            addNewEnrollment(course);
                           }}
                         >
                           Enroll

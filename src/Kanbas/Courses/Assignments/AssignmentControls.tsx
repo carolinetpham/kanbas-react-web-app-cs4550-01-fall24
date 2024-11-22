@@ -1,19 +1,27 @@
 import { FaPlus } from "react-icons/fa6";
 import { CiSearch } from "react-icons/ci";
 import { useNavigate, useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import * as coursesClient from "../client";
+import * as assignmentsClient from "./client";
+import { addAssignment, updateAssignment } from "./reducer";
 
 export default function AssignmentControls() {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const navigate = useNavigate();
   const { cid } = useParams();
 
+  const handleAddAssignment = () => {
+    navigate(`/Kanbas/Courses/${cid}/Assignments/New`); // Navigate to the editor for a new assignment
+  };
+
   return (
     <div id="wd-assignment-controls">
       <button
         id="wd-add-assignment-group"
         className="btn btn-lg btn-danger me-1 float-end"
-        onClick={() => navigate(`/Kanbas/Courses/${cid}/Assignments/new`)}
+        onClick={handleAddAssignment}
       >
         <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
         Assignment
