@@ -3,6 +3,16 @@ export const REMOTE_SERVER = process.env.REACT_APP_REMOTE_SERVER;
 export const USERS_API = `${REMOTE_SERVER}/api/users`;
 const axiosWithCredentials = axios.create({ withCredentials: true });
 
+export const createUser = async (user: any) => {
+  const response = await axios.post(`${USERS_API}`, user);
+  return response.data;
+};
+
+export const deleteUser = async (userId: string) => {
+  const response = await axios.delete( `${USERS_API}/${userId}` );
+  return response.data;
+};
+
 export const findAllUsers = async () => {
   const response = await axiosWithCredentials.get(USERS_API);
   return response.data;
@@ -58,7 +68,7 @@ export const signin = async (credentials: any) => {
   export const updateUser = async (user: any) => {
     const response = await axiosWithCredentials.put(`${USERS_API}/${user._id}`, user);
     return response.data;
-  };
+  };  
 
   export const getEnrollmentsForCurrentUser = async () => {
     const response = await axios.get(`${USERS_API}/current/enrollments`, {
