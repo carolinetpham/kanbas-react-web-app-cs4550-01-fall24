@@ -82,10 +82,6 @@ export default function Dashboard({
     );
   };
 
-  const filteredCourses = showAllCourses
-    ? courses
-    : courses.filter((course: any) => isEnrolled(course._id));
-
   useEffect(() => {
     console.log("Enrollments updated:", enrollments);
   }, [enrollments]);
@@ -137,12 +133,12 @@ export default function Dashboard({
 
       <h2>
         {showAllCourses ? "Published Courses" : "Published Courses"} (
-        {filteredCourses.length})
+        {courses.length})
       </h2>
       <hr />
 
       <div className="row row-cols-1 row-cols-md-5 g-4">
-        {filteredCourses.map((course) => (
+        {courses.map((course) => (
           <div key={course._id} className="col" style={{ width: "300px" }}>
             <div className="card rounded-3 overflow-hidden">
               <Link
