@@ -3,6 +3,14 @@ export function findAllCourses() {
   return model.find();
 }
 
+export function findUsersForCourse(courseId) {
+  const { users, courses } = Database;
+  const coursesUsers = users.filter((user) =>
+    courses.some((user) => user.course === courseId && user.course === user._id)
+  );
+  return coursesUsers;
+}
+
 export function findCoursesForEnrolledUser(userId) {
   const { courses, enrollments } = Database;
   const enrolledCourses = courses.filter((course) =>
