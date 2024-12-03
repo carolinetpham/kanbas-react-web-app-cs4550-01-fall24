@@ -8,7 +8,8 @@ import ModuleRoutes from "./Kanbas/Modules/routes.js";
 import AssignmentRoutes from "./Kanbas/Assignments/routes.js";
 import EnrollmentRoutes from "./Kanbas/Enrollments/routes.js";
 import session from "express-session";
-import "dotenv/config";
+import dotenv from "dotenv";
+dotenv.config({ path: "../.env" });
 
 const app = express();
 app.use(
