@@ -63,7 +63,6 @@ export const createEnrollment = async (enrollment: any) => {
 };
 
 export const signin = async (credentials: any) => {
-    console.log(USERS_API);
     const response = await axiosWithCredentials.post(`${USERS_API}/signin`, credentials);
     return response.data;
   };
