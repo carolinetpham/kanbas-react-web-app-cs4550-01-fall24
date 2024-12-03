@@ -28,6 +28,7 @@ const sessionOptions = {
   saveUninitialized: false,
 };
 if (process.env.NODE_ENV !== "development") {
+  console.log(process.env);
   sessionOptions.proxy = true;
   sessionOptions.cookie = {
     sameSite: "none",
