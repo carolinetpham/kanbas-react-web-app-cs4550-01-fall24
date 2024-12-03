@@ -1,6 +1,6 @@
 import axios from "axios";
-//export const REMOTE_SERVER = process.env.REACT_APP_REMOTE_SERVER;
-export const USERS_API = `${process.env.REACT_APP_REMOTE_SERVER}/api/users`;
+export const REMOTE_SERVER = process.env.REACT_APP_REMOTE_SERVER;
+export const USERS_API = `${REMOTE_SERVER}/api/users || 'https://kanbas-node-server-a6-cpham-88187b90f517.herokuapp.com'}/api/users`;
 const axiosWithCredentials = axios.create({ withCredentials: true });
 
 export const findCoursesForUser = async (userId: string) => {
